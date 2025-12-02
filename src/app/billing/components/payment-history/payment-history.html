@@ -1,0 +1,90 @@
+<section class="payment-history">
+  <div class="payment-history__card">
+    <header class="payment-history__header">
+      <h2 class="payment-history__title">Payment History</h2>
+      <p class="payment-history__subtitle">
+        Please reach out to our friendly team via
+        <a href="mailto:team@scopelab.com">team@scopelab.com</a> if you have questions.
+      </p>
+    </header>
+
+    <!-- Loading state -->
+    @if(loading()) {
+    <div class="payment-history__state">
+      <p class="payment-history__state-title">Loading invoices…</p>
+      <p class="payment-history__state-desc">Please wait while we fetch your payment history.</p>
+    </div>
+    }
+    <!-- Error state -->
+    @if(!loading() && error()) {
+    <div class="payment-history__state">
+      <p class="payment-history__state-title">Unexpected error</p>
+      <p class="payment-history__state-desc">
+        {{ error() }}
+      </p>
+      <button type="button" class="btn btn--primary" (click)="onRetry()">Retry</button>
+    </div>
+    }
+
+    <!-- Empty state -->
+    @if(!loading() && !error() && invoices().length === 0) {
+    <div class="payment-history__state">
+      <p class="payment-history__state-title">No payment history available</p>
+      <p class="payment-history__state-desc">
+        Once you start making transactions, your payment details will appear here.
+      </p>
+    </div>
+    }
+
+    <!-- Table / grid -->
+    @if(!loading() && !error() && invoices().length > 0) {
+    <div class="payment-history__table-wrapper">
+      <table class="payment-history__table">
+        <thead>
+          <tr>
+            <th scope="col">Invoice</th>
+            <th scope="col">Status</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Plan</th>
+            <th scope="col" class="payment-history__download-header">&nbsp;</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for(invoice of invoices(); track invoice; let i = $index) {
+          <tr>
+            <td data-label="Invoice">
+              {{ formatDate(invoice.date) }}
+            </td>
+
+            <td data-label="Status">
+              <span
+                class="status-pill"
+                [class.status-pill--paid]="invoice.status === 'paid'"
+                [class.status-pill--pending]="invoice.status === 'pending'"
+              >
+                {{ invoice.status === 'paid' ? 'Paid' : 'Pending' }}
+              </span>
+            </td>
+
+            <td data-label="Amount">
+              {{ formatAmount(invoice.amount, invoice.currency) }}
+            </td>
+
+            <td data-label="Plan">
+              {{ invoice.plan }}
+            </td>
+
+            <td data-label="Download" class="payment-history__download-cell">
+              <button type="button" class="link-button" (click)="onDownload(invoice)">
+                Download
+              </button>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    }
+  </div>
+</section>

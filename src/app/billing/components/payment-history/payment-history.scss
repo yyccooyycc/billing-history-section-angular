@@ -138,11 +138,11 @@
   }
 
   &__download-header {
-    text-align: right;
+    text-align: center;
   }
 
   &__download-cell {
-    text-align: right;
+    text-align: center;
   }
 }
 
@@ -261,7 +261,13 @@
     }
   }
 
-  .payment-history__download-cell {
-    justify-content: flex-end;
+  .payment-history__table td.payment-history__download-cell {
+    justify-content: center;
+    padding-top: 8px;
+  }
+
+  .payment-history__table td.payment-history__download-cell::before {
+    content: '';
+    margin-right: 0;
   }
 }

@@ -1,43 +1,47 @@
 <section class="payment-history">
   <div class="payment-history__card">
-    <header class="payment-history__header">
-      <h2 class="payment-history__title">Payment History</h2>
-      <p class="payment-history__subtitle">
-        Please reach out to our friendly team via
-        <a href="mailto:team@scopelab.com">team@scopelab.com</a> if you have questions.
-      </p>
-    </header>
-
+    @if (loading()) {
     <!-- Loading state -->
-    @if(loading()) {
     <div class="payment-history__state">
       <p class="payment-history__state-title">Loading invoices…</p>
       <p class="payment-history__state-desc">Please wait while we fetch your payment history.</p>
     </div>
-    }
-    <!-- Error state -->
-    @if(!loading() && error()) {
-    <div class="payment-history__state">
-      <p class="payment-history__state-title">Unexpected error</p>
-      <p class="payment-history__state-desc">
-        {{ error() }}
-      </p>
-      <button type="button" class="btn btn--primary" (click)="onRetry()">Retry</button>
+    } @else if (invoices().length === 0) { @if (error()) {
+    <div class="payment-history__empty">
+      <div class="payment-history__empty-icon" aria-hidden="true">
+        <i class="ri-bill-line"></i>
+      </div>
+      <p class="payment-history__empty-title">Unexpected error</p>
+      <p class="payment-history__empty-desc">There was a problem, try again later.</p>
     </div>
-    }
-
-    <!-- Empty state -->
-    @if(!loading() && !error() && invoices().length === 0) {
-    <div class="payment-history__state">
-      <p class="payment-history__state-title">No payment history available</p>
-      <p class="payment-history__state-desc">
+    } @else {
+    <div class="payment-history__empty">
+      <div class="payment-history__empty-icon" aria-hidden="true">
+        <i class="ri-bill-line"></i>
+      </div>
+      <p class="payment-history__empty-title">No payment history available</p>
+      <p class="payment-history__empty-desc">
         Once you start making transactions, your payment details will appear here.
       </p>
     </div>
+    } } @else {
+    <header class="payment-history__header">
+      <h2 class="payment-history__title">Payment History</h2>
+      <p class="payment-history__subtitle">
+        Please reach out to our friendly team via
+        <a href="mailto:team@codepulse.com">team@codepulse.com</a> if you have questions.
+      </p>
+    </header>
+
+    @if (error()) {
+    <div class="payment-history__alert" role="status" aria-live="polite">
+      <span class="payment-history__alert-label">Error</span>
+      <span class="payment-history__alert-text">
+        {{ error() }}
+      </span>
+    </div>
     }
 
-    <!-- Table / grid -->
-    @if(!loading() && !error() && invoices().length > 0) {
     <div class="payment-history__table-wrapper">
       <table class="payment-history__table">
         <thead>
@@ -51,7 +55,7 @@
         </thead>
 
         <tbody>
-          @for(invoice of invoices(); track invoice; let i = $index) {
+          @for (invoice of invoices(); track invoice.id) {
           <tr>
             <td data-label="Invoice">
               {{ formatDate(invoice.date) }}

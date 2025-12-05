@@ -52,9 +52,7 @@ export class PaymentHistoryComponent {
       },
       error: () => {
         this.loading.set(false);
-        this.error.set(
-          "We're facing some issues at the moment. Please try again later or contact support."
-        );
+        this.error.set('There was a problem, try again later.');
       },
     });
   }
@@ -64,7 +62,6 @@ export class PaymentHistoryComponent {
   }
 
   onDownload(invoice: Invoice): void {
-    // [Stretch] 真實情況會用後端產生 signed URL
     window.open(invoice.downloadUrl, '_blank', 'noopener');
   }
 

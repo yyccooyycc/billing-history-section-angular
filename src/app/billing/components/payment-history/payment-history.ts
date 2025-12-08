@@ -66,11 +66,13 @@ export class PaymentHistoryComponent {
   }
 
   formatDate(dateStr: string): string {
-    return new Date(dateStr).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: '2-digit',
-    });
+    const d = new Date(dateStr);
+
+    const day = d.getDate();
+    const month = d.toLocaleString('en-US', { month: 'short' });
+    const year = d.getFullYear();
+
+    return `${day} ${month}, ${year}`;
   }
 
   formatAmount(amount: number): string {

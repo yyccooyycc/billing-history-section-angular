@@ -6,7 +6,7 @@
       <p class="payment-history__state-title">Loading invoices…</p>
       <p class="payment-history__state-desc">Please wait while we fetch your payment history.</p>
     </div>
-    } @else if (invoices().length === 0) { @if (error()) {
+    } @else if(error() && invoices().length === 0) {
     <div class="payment-history__empty">
       <div class="payment-history__empty-icon" aria-hidden="true">
         <i class="ri-bill-line"></i>
@@ -14,7 +14,7 @@
       <p class="payment-history__empty-title">Unexpected error</p>
       <p class="payment-history__empty-desc">There was a problem, try again later.</p>
     </div>
-    } @else {
+    } @else if(!error() && invoices().length === 0){
     <div class="payment-history__empty">
       <div class="payment-history__empty-icon" aria-hidden="true">
         <i class="ri-bill-line"></i>
@@ -24,7 +24,7 @@
         Once you start making transactions, your payment details will appear here.
       </p>
     </div>
-    } } @else {
+    } @else {
     <header class="payment-history__header">
       <h2 class="payment-history__title">Payment History</h2>
       <p class="payment-history__subtitle">

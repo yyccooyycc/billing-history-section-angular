@@ -15,7 +15,7 @@ import { Invoice } from '../../models/invoice.model';
 import { ToastService } from '../../services/toast.service';
 @Component({
   selector: 'app-payment-history',
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './payment-history.html',
   styleUrl: './payment-history.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

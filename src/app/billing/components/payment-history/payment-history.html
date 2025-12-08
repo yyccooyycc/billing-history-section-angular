@@ -55,10 +55,10 @@
         </thead>
 
         <tbody>
-          @for (invoice of invoices(); track invoice.id) {
+          @for (invoice of invoices(); track invoice.invoice_url) {
           <tr>
             <td data-label="Invoice">
-              {{ formatDate(invoice.date) }}
+              {{ formatDate(invoice.created_at) }}
             </td>
 
             <td data-label="Status">
@@ -72,7 +72,7 @@
             </td>
 
             <td data-label="Amount">
-              {{ formatAmount(invoice.amount, invoice.currency) }}
+              {{ formatAmount(invoice.amount) }}
             </td>
 
             <td data-label="Plan">

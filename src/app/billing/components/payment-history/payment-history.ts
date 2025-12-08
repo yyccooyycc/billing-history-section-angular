@@ -62,23 +62,18 @@ export class PaymentHistoryComponent {
   }
 
   onDownload(invoice: Invoice): void {
-    window.open(invoice.downloadUrl, '_blank', 'noopener');
+    window.open(invoice.invoice_url, '_blank');
   }
 
   formatDate(dateStr: string): string {
-    const date = new Date(dateStr);
-    return new Intl.DateTimeFormat('en-GB', {
-      day: 'numeric',
-      month: 'short',
+    return new Date(dateStr).toLocaleDateString('en-US', {
       year: 'numeric',
-    }).format(date);
+      month: 'short',
+      day: '2-digit',
+    });
   }
 
-  formatAmount(amount: number, currency: string): string {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency,
-      minimumFractionDigits: 2,
-    }).format(amount);
+  formatAmount(amount: number): string {
+    return `$${amount.toFixed(2)}`;
   }
 }

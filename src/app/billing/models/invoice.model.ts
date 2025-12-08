@@ -1,11 +1,13 @@
-export type InvoiceStatus = 'paid' | 'pending';
+export type InvoiceStatus = 'paid' | 'pending' | 'failed';
 
 export interface Invoice {
-  id: string;
-  date: string;
+  created_at: string;
   status: InvoiceStatus;
   amount: number;
-  currency: string;
   plan: string;
-  downloadUrl: string;
+  invoice_url: string;
+}
+
+export interface InvoiceApiResponse {
+  data: Invoice[];
 }

@@ -1,14 +1,6 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  effect,
-  inject,
-  signal,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
 
 import { InvoiceService } from '../../services/invoice.service';
 import { Invoice } from '../../models/invoice.model';
@@ -77,5 +69,9 @@ export class PaymentHistoryComponent {
 
   formatAmount(amount: number): string {
     return `$${amount.toFixed(2)}`;
+  }
+
+  formatPlan(plan: Invoice['plan']): string {
+    return plan.charAt(0).toUpperCase() + plan.slice(1) + ' plan';
   }
 }

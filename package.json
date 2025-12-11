@@ -6,7 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "build:ghpages": "ng build --configuration production --base-href /billing-history-section-angular/",
+    "deploy": "npm run build:ghpages && gh-pages -d dist/billing-history-section-angular/browser -b gh-pages -f"
   },
   "prettier": {
     "printWidth": 100,
@@ -37,6 +39,7 @@
     "@angular/build": "^21.0.1",
     "@angular/cli": "^21.0.1",
     "@angular/compiler-cli": "^21.0.0",
+    "gh-pages": "^6.3.0",
     "jsdom": "^27.1.0",
     "typescript": "~5.9.2",
     "vitest": "^4.0.8"
